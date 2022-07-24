@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
-import { postUser } from '../../Store/Features/Users/users.actions';
+import { postUser, updateUser } from '../../Store/Features/Users/users.actions';
 
 interface Role {
   name: string;
@@ -66,21 +66,19 @@ export class UsersFormComponent implements OnInit, OnDestroy {
     //Actualizar o actualizar al usuario a la MOCKAPI
     
     if(!this.userToEdit){
-      // this.usersService.postUser(user).subscribe(
-      // (val)=>{
-      //     this.router.navigate(['/home/users/list'])
-      //   }
-      // )
       this.store.dispatch(postUser({user:user}));
       this.router.navigate(['/home/users/list']);
     } else {
       user['id']=this.userToEdit.id;
-      this.usersService.updateUser(user).subscribe(
-        (val)=>{
-          this.usersService.userToEdit=null;
-          this.router.navigate(['/home/users/list'])
-        }
-      )
+      // this.usersService.updateUser(user).subscribe(
+      //   (val)=>{
+      //     this.usersService.userToEdit=null;
+      //     this.router.navigate(['/home/users/list'])
+      //   }
+      // )
+      this.store.dispatch(updateUser({userUpdated:user}));
+      this.usersService.userToEdit=null;
+      this.router.navigate(['/home/users/list'])
     }
   }
 

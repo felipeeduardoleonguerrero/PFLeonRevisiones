@@ -34,3 +34,8 @@ export const getDetailedCourseSuccess = createAction (
   '[Courses] getDetailed course success',
   props<{courseDetailed:Course}>()
 );
+
+export const updateCourse = createAction (
+  '[Students] update course',
+  props<{courseUpdated:Course}>()
+);

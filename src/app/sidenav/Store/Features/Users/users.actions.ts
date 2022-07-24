@@ -34,3 +34,8 @@ export const getDetailedUserSuccess = createAction (
   '[Users] getDetailed user success',
   props<{userDetailed:Users}>()
 );
+
+export const updateUser = createAction (
+  '[Users] update user',
+  props<{userUpdated:Users}>()
+);

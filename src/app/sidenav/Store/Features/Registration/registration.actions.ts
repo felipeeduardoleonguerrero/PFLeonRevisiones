@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Registration } from 'src/app/services/registration';
 import { Students } from 'src/app/services/students';
 
 export const loadRegistrations = createAction(
@@ -23,4 +24,9 @@ export const deleteRegistration = createAction (
 export const postRegistration = createAction (
   '[Registration] post registration',
   props<{registration:Students}>()
+);
+
+export const updateRegistration = createAction (
+  '[Registration] update registration',
+  props<{registrationUpdated:Students}>()
 );

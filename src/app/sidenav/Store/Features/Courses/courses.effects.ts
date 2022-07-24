@@ -57,5 +57,17 @@ export class CoursesEffects {
     }
   )
 
+  updateCourse$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(CoursesActions.updateCourse),
+      mergeMap((course) => this.coursesService.updateCourse(course.courseUpdated)
+        .pipe(
+          map(() => CoursesActions.loadCoursess()),
+          catchError(() => EMPTY)
+        ))
+      )
+    }
+  )
+
   constructor(private actions$: Actions, private coursesService:CoursesService) {}
 }

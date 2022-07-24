@@ -34,3 +34,8 @@ export const getDetailedStudentsSuccess = createAction (
   '[Students] getDetailed students success',
   props<{studentDetailed:Students}>()
 );
+
+export const updateStudent = createAction (
+  '[Students] update students',
+  props<{studentUpdated:Students}>()
+);

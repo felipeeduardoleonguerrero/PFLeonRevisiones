@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CoursesService } from 'src/app/services/courses.service';
 import { StudentsService } from 'src/app/services/students.service';
-import { postCourse } from '../../Store/Features/Courses/courses.actions';
+import { postCourse, updateCourse } from '../../Store/Features/Courses/courses.actions';
 
 @Component({
   selector: 'app-add-course',
@@ -56,48 +56,6 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   onSubmit(){
 
-    // //Suscripción a los cursos
-
-    // let courses=[];
-
-    // this.subscriptions.add(
-    //   this.studentsService.getCoursesList().subscribe(
-
-    //     val=>courses=val
-
-    //   )
-    // )
-
-    // //Generamos un id para el nuevo curso. Si no hay cursos, el índice del nuevo curso será igual a index (1).
-    
-    // let index=1;
-
-    // if (courses.length>0 && !this.courseToEdit) {
-
-    //   index=courses.length+1;
-    //   this.coursesForm.value['id']=index;
-    //   courses.push(this.coursesForm.value);
-
-    // } else if (courses.length===0 && !this.courseToEdit){
-
-    //   this.coursesForm.value['id']=index;
-    //   courses.push(this.coursesForm.value)
-
-    // }
-
-    // //Actualizamos al curso encontrando su id.
-
-    // if (this.courseToEdit) {
-    //     let indexOfCourse = courses.findIndex((course)=>course.id===this.courseToEdit.id);
-    //    courses[indexOfCourse]=this.coursesForm.value;
-    //    this.studentsService.courseToEdit=null;
-    // }
-
-    // //Igualamos courses con coursesList (students.servivce). ! (null assertion value) avisa a Angular que el valor no será igual a null.
-
-    // this.studentsService.coursesList=courses!;
-    // this.router.navigate(["home/courses/list"]);
-
     const course = this.coursesForm.value;
     
     //Actualizar o actualizar al estudiante a la MOCKAPI
@@ -107,12 +65,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.router.navigate(['/home/courses/list']);
     } else {
       course['id']=this.courseToEdit.id;
-      this.coursesService.updateCourse(course).subscribe(
-        (val)=>{
-          this.coursesService.courseToEdit=null;
-          this.router.navigate(['/home/courses/list'])
-        }
-      )
+      this.store.dispatch(updateCourse({courseUpdated:course}));
+      this.coursesService.courseToEdit=null;
+      this.router.navigate(['/home/courses/list'])
     }
 
   }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StudentsService } from 'src/app/services/students.service';
 import { Store } from '@ngrx/store';
-import { loadStudentss, postStudents } from '../../Store/Features/Students/students.actions';
+import { loadStudentss, postStudents, updateStudent } from '../../Store/Features/Students/students.actions';
 
 @Component({
   selector: 'app-students-form',
@@ -63,21 +63,13 @@ export class StudentsFormComponent implements OnInit, OnDestroy {
     //Actualizar o actualizar al estudiante a la MOCKAPI
     
     if(!this.studentToEdit){
-      // this.studentsService.postStudent(student).subscribe(
-      // (val)=>{
-      //     this.router.navigate(['/home/students/list'])
-      //   }
-      // )
       this.store.dispatch(postStudents({student:student}));
       this.router.navigate(['/home/students/list']);
     } else {
       student['id']=this.studentToEdit.id;
-      this.studentsService.updateStudent(student).subscribe(
-        (val)=>{
-          this.studentsService.studentToEdit=null;
-          this.router.navigate(['/home/students/list'])
-        }
-      )
+      this.store.dispatch(updateStudent({studentUpdated:student}));
+      this.studentsService.studentToEdit=null;
+      this.router.navigate(['/home/students/list']);
     }
     this.store.dispatch(loadStudentss());
   }

@@ -181,13 +181,13 @@ export class CoursesListComponent implements OnInit {
 
 //Eliminación de inscripción
 
-  deleteRegistration(id:string){
-    this.registrationService.removeRegistration(id).subscribe(
+  deleteRegistration(el:string){
+    this.registrationService.removeRegistration(el).subscribe(
       (data)=>{
         this.getRegistration();
       }
     );
-    // this.detailTable.renderRows();
+    // this.store.dispatch(deleteRegistration({id:el.id}))
   }
 
   ngOnDestroy(): void {

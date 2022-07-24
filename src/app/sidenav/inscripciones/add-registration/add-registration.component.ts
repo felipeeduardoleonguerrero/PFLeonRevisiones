@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { StudentsService } from 'src/app/services/students.service';
-import { postRegistration } from '../../Store/Features/Registration/registration.actions';
+import { postRegistration, updateRegistration } from '../../Store/Features/Registration/registration.actions';
 
 @Component({
   selector: 'app-add-registration',
@@ -68,19 +68,13 @@ export class AddRegistrationComponent implements OnInit, OnDestroy {
       this.router.navigate(['/home/registration/list']);
     } else {
       registration['id']=this.registrationToEdit.id;
-      this.studentsService.updateStudent(registration).subscribe(
-        (val)=>{
-          this.studentsService.studentToEdit=null;
-          this.router.navigate(['/home/registration/list'])
-        }
-      )
+      this.store.dispatch(updateRegistration({registrationUpdated:registration}));
+      this.studentsService.studentToEdit=null;
+      this.router.navigate(['/home/registration/list'])
+
     }
 
   }
-
-  /*cancelRegistration() {
-    this.router.navigate(["home/registration/list"]);
-  }*/
 
   goBack () {
     this.studentsService.studentToEdit=null;

@@ -33,5 +33,17 @@ export class RegistrationEffects {
     }
   )
 
+  updateRegistration$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(RegistrationActions.updateRegistration),
+      mergeMap((registration) => this.studentsService.updateStudent(registration.registrationUpdated)
+        .pipe(
+          map(() => RegistrationActions.loadRegistrations()),
+          catchError(() => EMPTY)
+        ))
+      )
+    }
+  )
+
   constructor(private actions$: Actions, private studentsService:StudentsService) {}
 }
